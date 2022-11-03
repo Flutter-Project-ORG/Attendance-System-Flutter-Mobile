@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "525487900778",
+    "firebase_url": "https://attendance-system-98e2b-default-rtdb.europe-west1.firebasedatabase.app",
+    "project_id": "attendance-system-98e2b",
+    "storage_bucket": "attendance-system-98e2b.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:525487900778:android:1303fe57fe539800c06213",
+        "android_client_info": {
+          "package_name": "com.example.attendance_system_flutter_mobile"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "525487900778-oia0uprqifo4b6otbniinp7baqtt1512.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyB8v1L7QXGHY5mm-N-Sfc0r5TM__aT9bOU"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "525487900778-oia0uprqifo4b6otbniinp7baqtt1512.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "525487900778-rhoec5pj8imjpth93sgoavru2i37cvk5.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.example.attendanceSystemFlutterMobile"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
