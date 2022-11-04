@@ -1,3 +1,5 @@
+import 'package:attendance_system_flutter_mobile/res/colors.dart';
+import 'package:convex_bottom_bar/convex_bottom_bar.dart';
 import 'package:flutter/material.dart';
 
 class nav extends StatefulWidget {
@@ -23,22 +25,30 @@ class _navState extends State<nav> {
   ];
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: screens[currentIndex],
-      bottomNavigationBar: BottomNavigationBar(
-        backgroundColor: Color.fromARGB(255, 135, 246, 217),
-        selectedItemColor: Colors.blue,
-        iconSize: 30,
-        selectedFontSize: 13,
-        showUnselectedLabels: false,
-        currentIndex: currentIndex,
-        onTap: (index) => setState(() => currentIndex = index),
-        items: [
-          BottomNavigationBarItem(icon: Icon(Icons.home), label: "home"),
-          BottomNavigationBarItem(icon: Icon(Icons.qr_code), label: "scan"),
-          BottomNavigationBarItem(icon: Icon(Icons.person), label: "profile"),
-        ],
+    return SafeArea(
+      child: Scaffold(
+        body: screens[currentIndex],
+        bottomNavigationBar: ConvexAppBar(
+          items: [
+            TabItem(
+              icon: Icon(Icons.home),
+              title: 'Home',
+            ),
+            TabItem(icon: Icon(Icons.qr_code), title: 'QR'),
+            TabItem(icon: Icon(Icons.person), title: 'Profile'),
+          ],
+          initialActiveIndex: 0, //optional, default as 0
+          onTap: updateIndex,
+          backgroundColor: CustomColors.lightBgColor,
+          activeColor: CustomColors.darkPrimaryColor,
+        ),
       ),
     );
+  }
+
+  void updateIndex(index) {
+    setState(() {
+      currentIndex = index;
+    });
   }
 }

@@ -1,4 +1,7 @@
 import 'package:attendance_system_flutter_mobile/views/home_view.dart';
+import 'package:attendance_system_flutter_mobile/views/login_view.dart';
+import 'package:attendance_system_flutter_mobile/views/navigation_view.dart';
+import 'package:attendance_system_flutter_mobile/views/onBoarding_view.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'firebase_options.dart';
@@ -39,7 +42,7 @@ class MyApp extends StatelessWidget {
           secondary: CustomColors.darkSecondaryColor,
         ),
       ),
-      home: const home_page(),
+      home: const OnBoardingView(),
     );
   }
 }
