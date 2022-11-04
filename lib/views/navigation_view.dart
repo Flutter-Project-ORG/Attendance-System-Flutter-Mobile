@@ -1,5 +1,9 @@
 import 'package:attendance_system_flutter_mobile/res/colors.dart';
+import 'package:attendance_system_flutter_mobile/views/books_view.dart';
+import 'package:attendance_system_flutter_mobile/views/profile_view.dart';
+import 'package:attendance_system_flutter_mobile/views/qra_view.dart';
 import 'package:convex_bottom_bar/convex_bottom_bar.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
 class nav extends StatefulWidget {
@@ -13,15 +17,15 @@ class _navState extends State<nav> {
   int currentIndex = 0;
 
   final screens = [
-    Center(
-      child: Text("1"),
+    Container(
+      child: BooksView(),
     ),
-    Center(
-      child: Text("2"),
+    Container(
+      child: QraView(),
     ),
-    Center(
-      child: Text("3"),
-    )
+    Container(
+      child: ProfileView(),
+    ),
   ];
   @override
   Widget build(BuildContext context) {

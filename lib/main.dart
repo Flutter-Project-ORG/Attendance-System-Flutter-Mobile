@@ -1,6 +1,3 @@
-import 'package:attendance_system_flutter_mobile/views/home_view.dart';
-import 'package:attendance_system_flutter_mobile/views/login_view.dart';
-import 'package:attendance_system_flutter_mobile/views/navigation_view.dart';
 import 'package:attendance_system_flutter_mobile/views/onBoarding_view.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
@@ -16,6 +13,7 @@ Future<void> main() async {
 
   runApp(MaterialApp(
     home: MyApp(),
+    
   ));
 }
 

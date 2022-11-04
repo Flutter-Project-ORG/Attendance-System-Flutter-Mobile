@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'package:attendance_system_flutter_mobile/views/login_view.dart';
 import 'package:attendance_system_flutter_mobile/views/signup-view.dart';
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -27,7 +28,7 @@ class _SplashViewState extends State<SplashView> {
         Duration(seconds: 5),
         () => Navigator.pushReplacement(context,
                 MaterialPageRoute(builder: (context) {
-              return Sign_up();
+              return Log_in();
             })));
   }
 
