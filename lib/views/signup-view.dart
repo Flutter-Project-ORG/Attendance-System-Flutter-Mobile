@@ -1,140 +1,153 @@
-import 'package:attendance_system_flutter_mobile/views/login_view.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:firebase_core/firebase_core.dart';
-
+import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
+import 'package:ndialog/ndialog.dart';
 
-class Sign_up extends StatefulWidget {
-  const Sign_up({super.key});
+class SignUpScreen extends StatefulWidget {
+  const SignUpScreen({Key? key}) : super(key: key);
 
   @override
-  State<Sign_up> createState() => _Sign_upState();
+  _SignUpScreenState createState() => _SignUpScreenState();
 }
 
-class _Sign_upState extends State<Sign_up> {
-  TextEditingController nameController = new TextEditingController();
-  TextEditingController passwordController = new TextEditingController();
-
-  GlobalKey<FormState> myformKey = GlobalKey();
+class _SignUpScreenState extends State<SignUpScreen> {
+  var fullNameController = TextEditingController();
+  var emailController = TextEditingController();
+  var passwordController = TextEditingController();
+  var confirmController = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        appBar: AppBar(),
-        body: Form(
-          key: myformKey,
-          child: Padding(
-              padding: const EdgeInsets.all(10),
-              child: ListView(
-                children: <Widget>[
-                  Container(
-                      alignment: Alignment.center,
-                      padding: const EdgeInsets.all(10),
-                      child: const Text(
-                        'Sign UP',
-                        style: TextStyle(fontSize: 20),
-                      )),
-                  Container(
-                    padding: const EdgeInsets.all(10),
-                    child: TextFormField(
-                      validator: (data) {
-                        if (data.toString().contains("@") == false) {
-                          return 'email must have the @ symbol ! ';
-                        }
-                      },
-                      controller: nameController,
-                      decoration: const InputDecoration(
-                        border: OutlineInputBorder(),
-                        labelText: 'User Name',
-                      ),
-                    ),
-                  ),
-                  Container(
-                    padding: const EdgeInsets.fromLTRB(10, 10, 10, 0),
-                    child: TextFormField(
-                      validator: (data) {
-                        if (data.toString().length <= 6) {
-                          return 'the password must be at least 7 letters';
-                        }
-                        if (data![0].toString().codeUnits[0] > 90) {
-                          return "the password should start with capital";
-                        }
-                      },
-                      obscureText: true,
-                      controller: passwordController,
-                      decoration: const InputDecoration(
-                        border: OutlineInputBorder(),
-                        labelText: 'Password',
-                      ),
-                    ),
-                  ),
-                  SizedBox(
-                    height: 10,
-                  ),
-                  Container(
-                      height: 50,
-                      padding: const EdgeInsets.fromLTRB(10, 0, 10, 0),
-                      child: ElevatedButton(
-                        child: const Text('Create my Account'),
-                        onPressed: () async {
-                          if (myformKey.currentState!.validate()) {
-                            try {
-                              FirebaseAuth AuthObject = FirebaseAuth.instance;
+      appBar: AppBar(
+        title: const Text('Sign Up Please'),
+      ),
+      body: Padding(
+        padding: const EdgeInsets.all(8.0),
+        child: Column(
+          children: [
+            TextField(
+              controller: fullNameController,
+              decoration: const InputDecoration(
+                hintText: 'FullName',
+              ),
+            ),
+            const SizedBox(
+              height: 10,
+            ),
+            TextField(
+              controller: emailController,
+              decoration: const InputDecoration(
+                hintText: 'Email',
+              ),
+            ),
+            const SizedBox(
+              height: 10,
+            ),
+            TextField(
+              controller: passwordController,
+              obscureText: true,
+              decoration: const InputDecoration(
+                hintText: 'Password',
+              ),
+            ),
+            const SizedBox(
+              height: 10,
+            ),
+            TextField(
+              controller: confirmController,
+              obscureText: true,
+              decoration: const InputDecoration(
+                hintText: 'Confirm Password',
+              ),
+            ),
+            const SizedBox(
+              height: 10,
+            ),
+            ElevatedButton(
+                onPressed: () async {
+                  var fullName = fullNameController.text.trim();
+                  var email = emailController.text.trim();
+                  var password = passwordController.text.trim();
+                  var confirmPass = confirmController.text.trim();
 
-                              UserCredential mysignupcre = await AuthObject
-                                  .createUserWithEmailAndPassword(
-                                      email: nameController.text,
-                                      password: passwordController.text);
-                            } catch (e) {
-                              showDialog(
-                                context: context,
-                                builder: (context) {
-                                  return AlertDialog(
-                                    content: Container(
-                                        child: Row(
-                                      children: [
-                                        Text("sorry"),
-                                        IconButton(
-                                            onPressed: (() {
-                                              passwordController.clear();
-                                              nameController.clear();
-                                              Navigator.pop(context);
-                                            }),
-                                            icon: Icon(Icons.delete))
-                                      ],
-                                    )),
-                                  );
-                                },
-                              );
+                  if (fullName.isEmpty ||
+                      email.isEmpty ||
+                      password.isEmpty ||
+                      confirmPass.isEmpty) {
+                    // show error toast
 
-                              ScaffoldMessenger.of(context).showSnackBar(
-                                  SnackBar(
-                                      content: Text("Sorry something wrong")));
-                            }
-                          }
-                        },
-                      )),
-                  Row(
-                    children: <Widget>[
-                      const Text('I have an account ?'),
-                      TextButton(
-                        child: const Text(
-                          'Sign In',
-                          style: TextStyle(fontSize: 20),
-                        ),
-                        onPressed: () {
-                          Navigator.push(context, MaterialPageRoute(
-                            builder: (context) {
-                              return Log_in();
-                            },
-                          ));
-                        },
-                      )
-                    ],
-                    mainAxisAlignment: MainAxisAlignment.center,
-                  ),
-                ],
-              )),
-        ));
+                    Fluttertoast.showToast(msg: 'Please fill all fields');
+                    return;
+                  }
+
+                  if (password.length < 6) {
+                    // show error toast
+                    Fluttertoast.showToast(
+                        msg:
+                            'Weak Password, at least 6 characters are required');
+
+                    return;
+                  }
+
+                  if (password != confirmPass) {
+                    // show error toast
+                    Fluttertoast.showToast(msg: 'Passwords do not match');
+
+                    return;
+                  }
+
+                  // request to firebase auth
+
+                  ProgressDialog progressDialog = ProgressDialog(
+                    context,
+                    title: const Text('Signing Up'),
+                    message: const Text('Please wait'),
+                  );
+
+                  progressDialog.show();
+                  try {
+                    FirebaseAuth auth = FirebaseAuth.instance;
+
+                    UserCredential userCredential =
+                        await auth.createUserWithEmailAndPassword(
+                            email: email, password: password);
+
+                    if (userCredential.user != null) {
+                      // store user information in Realtime database
+                      String uid = userCredential.user!.uid;
+                      DatabaseReference userRef =
+                          FirebaseDatabase.instance.ref('students/$uid');
+                      await userRef.set({'email': email, 'username': fullName});
+
+                      Fluttertoast.showToast(msg: 'Success');
+
+                      Navigator.of(context).pop();
+                    } else {
+                      Fluttertoast.showToast(msg: 'Failed');
+                    }
+
+                    progressDialog.dismiss();
+                  } on FirebaseAuthException catch (e) {
+                    progressDialog.dismiss();
+                    if (e.code == 'email-already-in-use') {
+                      Fluttertoast.showToast(msg: 'Email is already in Use');
+                    } else if (e.code == 'weak-password') {
+                      Fluttertoast.showToast(msg: 'Password is weak');
+                    }
+                  } catch (e) {
+                    progressDialog.dismiss();
+                    Fluttertoast.showToast(msg: 'Something went wrong');
+                  }
+                },
+                child: const Text('Sign Up')),
+            const SizedBox(
+              height: 10,
+            ),
+          ],
+        ),
+      ),
+    );
   }
 }

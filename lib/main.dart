@@ -1,3 +1,4 @@
+import 'package:attendance_system_flutter_mobile/views/login_view.dart';
 import 'package:attendance_system_flutter_mobile/views/onBoarding_view.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
@@ -13,7 +14,6 @@ Future<void> main() async {
 
   runApp(MaterialApp(
     home: MyApp(),
-    
   ));
 }
 
@@ -40,7 +40,7 @@ class MyApp extends StatelessWidget {
           secondary: CustomColors.darkSecondaryColor,
         ),
       ),
-      home: const OnBoardingView(),
+      home: const Log_in(),
     );
   }
 }

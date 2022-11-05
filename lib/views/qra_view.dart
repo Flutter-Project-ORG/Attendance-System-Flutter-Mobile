@@ -23,6 +23,8 @@ class _QraViewState extends State<QraView> {
       setState(() {
         result = event;
       });
+
+      /// TO DO: Attendance
     });
   }
 

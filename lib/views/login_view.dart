@@ -91,7 +91,7 @@ class _Log_inState extends State<Log_in> {
                       onPressed: () {
                         Navigator.push(context, MaterialPageRoute(
                           builder: (context) {
-                            return Sign_up();
+                            return SignUpScreen();
                           },
                         ));
                       },

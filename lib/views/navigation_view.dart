@@ -24,7 +24,7 @@ class _navState extends State<nav> {
       child: QraView(),
     ),
     Container(
-      child: ProfileView(),
+      child: ProfileScreen(),
     ),
   ];
   @override
