@@ -32,6 +32,7 @@ class _Log_inState extends State<Log_in> {
                 Container(
                   padding: const EdgeInsets.all(10),
                   child: TextField(
+                    style: TextStyle(color: Colors.orange),
                     controller: nameController,
                     decoration: const InputDecoration(
                       border: OutlineInputBorder(),
@@ -42,6 +43,7 @@ class _Log_inState extends State<Log_in> {
                 Container(
                   padding: const EdgeInsets.fromLTRB(10, 10, 10, 0),
                   child: TextField(
+                    style: TextStyle(color: Colors.orange),
                     obscureText: true,
                     controller: passwordController,
                     decoration: const InputDecoration(

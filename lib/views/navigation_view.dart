@@ -1,5 +1,5 @@
 import 'package:attendance_system_flutter_mobile/res/colors.dart';
-import 'package:attendance_system_flutter_mobile/views/books_view.dart';
+import 'package:attendance_system_flutter_mobile/views/news_view.dart';
 import 'package:attendance_system_flutter_mobile/views/profile_view.dart';
 import 'package:attendance_system_flutter_mobile/views/qra_view.dart';
 import 'package:convex_bottom_bar/convex_bottom_bar.dart';
@@ -18,7 +18,7 @@ class _navState extends State<nav> {
 
   final screens = [
     Container(
-      child: BooksView(),
+      child: NewsView(),
     ),
     Container(
       child: QraView(),

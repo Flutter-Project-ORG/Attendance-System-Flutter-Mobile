@@ -13,6 +13,7 @@ Future<void> main() async {
   // await FirebaseAuth.instance.useAuthEmulator('localhost', 9099);
 
   runApp(MaterialApp(
+    debugShowCheckedModeBanner: false,
     home: MyApp(),
   ));
 }
@@ -40,7 +41,7 @@ class MyApp extends StatelessWidget {
           secondary: CustomColors.darkSecondaryColor,
         ),
       ),
-      home: const Log_in(),
+      home: const OnBoardingView(),
     );
   }
 }

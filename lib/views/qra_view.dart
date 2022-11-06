@@ -32,7 +32,7 @@ class _QraViewState extends State<QraView> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text("QRA"),
+        title: Text("QR"),
       ),
       body: Center(
         child: Column(

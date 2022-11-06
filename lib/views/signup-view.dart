@@ -21,13 +21,14 @@ class _SignUpScreenState extends State<SignUpScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Sign Up Please'),
+        title: const Text('Sign Up '),
       ),
       body: Padding(
         padding: const EdgeInsets.all(8.0),
         child: Column(
           children: [
             TextField(
+              style: TextStyle(color: Colors.orange),
               controller: fullNameController,
               decoration: const InputDecoration(
                 hintText: 'FullName',
@@ -37,6 +38,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
               height: 10,
             ),
             TextField(
+              style: TextStyle(color: Colors.orange),
               controller: emailController,
               decoration: const InputDecoration(
                 hintText: 'Email',
@@ -46,6 +48,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
               height: 10,
             ),
             TextField(
+              style: TextStyle(color: Colors.orange),
               controller: passwordController,
               obscureText: true,
               decoration: const InputDecoration(
@@ -56,6 +59,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
               height: 10,
             ),
             TextField(
+              style: TextStyle(color: Colors.orange),
               controller: confirmController,
               obscureText: true,
               decoration: const InputDecoration(
