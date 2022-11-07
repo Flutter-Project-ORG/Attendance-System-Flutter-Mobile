@@ -2,16 +2,16 @@ import 'package:attendance_system_flutter_mobile/res/colors.dart';
 import 'package:flutter/material.dart';
 import 'package:qr_code_scanner/qr_code_scanner.dart';
 
-class QraView extends StatefulWidget {
-  const QraView({
+class QraViewsubject extends StatefulWidget {
+  const QraViewsubject({
     super.key,
   });
 
   @override
-  State<QraView> createState() => _QraViewState();
+  State<QraViewsubject> createState() => _QraViewsubjectState();
 }
 
-class _QraViewState extends State<QraView> {
+class _QraViewsubjectState extends State<QraViewsubject> {
   final GlobalKey _gLobalkey = GlobalKey();
   late final String title;
   QRViewController? controller;
@@ -32,7 +32,7 @@ class _QraViewState extends State<QraView> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text("QR"),
+        title: Text("Add subject"),
       ),
       body: Center(
         child: Column(

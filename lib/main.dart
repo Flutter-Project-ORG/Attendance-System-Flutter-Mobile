@@ -41,7 +41,7 @@ class MyApp extends StatelessWidget {
           secondary: CustomColors.darkSecondaryColor,
         ),
       ),
-      home: const OnBoardingView(),
+      home: const Log_in(),
     );
   }
 }

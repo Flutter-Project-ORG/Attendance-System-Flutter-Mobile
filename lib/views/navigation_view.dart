@@ -1,9 +1,9 @@
 import 'package:attendance_system_flutter_mobile/res/colors.dart';
 import 'package:attendance_system_flutter_mobile/views/news_view.dart';
 import 'package:attendance_system_flutter_mobile/views/profile_view.dart';
-import 'package:attendance_system_flutter_mobile/views/qra_view.dart';
+import 'package:attendance_system_flutter_mobile/views/qr_home_select.dart';
+import 'package:attendance_system_flutter_mobile/views/qr_attendance_view.dart';
 import 'package:convex_bottom_bar/convex_bottom_bar.dart';
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
 class nav extends StatefulWidget {
@@ -21,7 +21,7 @@ class _navState extends State<nav> {
       child: NewsView(),
     ),
     Container(
-      child: QraView(),
+      child: qr_home(),
     ),
     Container(
       child: ProfileScreen(),
