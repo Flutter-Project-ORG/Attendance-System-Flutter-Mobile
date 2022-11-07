@@ -49,6 +49,7 @@ class DefaultFirebaseOptions {
     messagingSenderId: '525487900778',
     projectId: 'attendance-system-98e2b',
     authDomain: 'attendance-system-98e2b.firebaseapp.com',
+    databaseURL: 'https://attendance-system-98e2b-default-rtdb.europe-west1.firebasedatabase.app',
     storageBucket: 'attendance-system-98e2b.appspot.com',
     measurementId: 'G-JWDD8NZGJQ',
   );
@@ -58,6 +59,7 @@ class DefaultFirebaseOptions {
     appId: '1:525487900778:android:1303fe57fe539800c06213',
     messagingSenderId: '525487900778',
     projectId: 'attendance-system-98e2b',
+    databaseURL: 'https://attendance-system-98e2b-default-rtdb.europe-west1.firebasedatabase.app',
     storageBucket: 'attendance-system-98e2b.appspot.com',
   );
 
@@ -66,6 +68,7 @@ class DefaultFirebaseOptions {
     appId: '1:525487900778:ios:852fc712f443b799c06213',
     messagingSenderId: '525487900778',
     projectId: 'attendance-system-98e2b',
+    databaseURL: 'https://attendance-system-98e2b-default-rtdb.europe-west1.firebasedatabase.app',
     storageBucket: 'attendance-system-98e2b.appspot.com',
     iosClientId: '525487900778-rhoec5pj8imjpth93sgoavru2i37cvk5.apps.googleusercontent.com',
     iosBundleId: 'com.example.attendanceSystemFlutterMobile',
@@ -76,6 +79,7 @@ class DefaultFirebaseOptions {
     appId: '1:525487900778:ios:852fc712f443b799c06213',
     messagingSenderId: '525487900778',
     projectId: 'attendance-system-98e2b',
+    databaseURL: 'https://attendance-system-98e2b-default-rtdb.europe-west1.firebasedatabase.app',
     storageBucket: 'attendance-system-98e2b.appspot.com',
     iosClientId: '525487900778-rhoec5pj8imjpth93sgoavru2i37cvk5.apps.googleusercontent.com',
     iosBundleId: 'com.example.attendanceSystemFlutterMobile',

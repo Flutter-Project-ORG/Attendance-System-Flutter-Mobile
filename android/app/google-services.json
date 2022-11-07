@@ -1,6 +1,7 @@
 {
   "project_info": {
     "project_number": "525487900778",
+    "firebase_url": "https://attendance-system-98e2b-default-rtdb.europe-west1.firebasedatabase.app",
     "project_id": "attendance-system-98e2b",
     "storage_bucket": "attendance-system-98e2b.appspot.com"
   },
@@ -29,6 +30,13 @@
             {
               "client_id": "525487900778-oia0uprqifo4b6otbniinp7baqtt1512.apps.googleusercontent.com",
               "client_type": 3
+            },
+            {
+              "client_id": "525487900778-rhoec5pj8imjpth93sgoavru2i37cvk5.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.example.attendanceSystemFlutterMobile"
+              }
             }
           ]
         }
