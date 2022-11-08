@@ -13,7 +13,6 @@ Future<void> main() async {
     debugShowCheckedModeBanner: false,
     home: MyApp(),
   ));
-
 }
 
 class MyApp extends StatelessWidget {
