@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'dart:developer';
 
 import 'package:attendance_system_flutter_mobile/res/colors.dart';
 import 'package:attendance_system_flutter_mobile/res/constants.dart';
@@ -21,32 +22,43 @@ class _QraViewsubjectState extends State<QraViewsubject> {
   final GlobalKey _gLobalkey = GlobalKey();
   late final String title;
   QRViewController? controller;
-  Barcode? result;
+  String? result;
+
   void qr(QRViewController controller) {
     this.controller = controller;
     controller.resumeCamera();
     controller.scannedDataStream.listen((event) async {
-      print(event);
-
-// /subjects-students/$insId/$subId
-      /// TO DO: Attendance
+      /// TO DO: Add Subject
       if (event.code == null) return;
       controller.pauseCamera();
-
       final key = encrypt.Key.fromUtf8(Constants.encryptKey);
       final iv = encrypt.IV.fromLength(16);
       final encrypter = encrypt.Encrypter(encrypt.AES(key));
-      final decrypted = encrypter
-          .decrypt(encrypt.Encrypted.fromBase64(event.code.toString()), iv: iv);
-      Map data = jsonDecode(decrypted) as Map;
-      DatabaseReference ref = FirebaseDatabase.instance.ref(
-          "subjects-students/${data["insId"]}/${data["subId"]}/${FirebaseAuth.instance.currentUser!.uid}");
-      await ref
-          .set({"studentName": FirebaseAuth.instance.currentUser!.displayName});
+      final decrypted = encrypter.decrypt(encrypt.Encrypted.fromBase64(event.code.toString()), iv: iv);
+      Map<String, dynamic> data = jsonDecode(decrypted) as Map<String, dynamic>;
+      DatabaseReference sRef =
+          FirebaseDatabase.instance.ref("students/${FirebaseAuth.instance.currentUser!.uid}/subjects");
+      final DataSnapshot test = await sRef.get();
+      List? studentSubject = test.value as List?;
+      if (studentSubject != null && studentSubject.contains(data["subId"])) {
+        setState(() {
+          result = 'You already have this subject';
+        });
+        return;
+      }
+      if (studentSubject == null) studentSubject = [];
+      studentSubject = studentSubject.toList();
+      studentSubject.add(data["subId"]);
+      await sRef.set(studentSubject);
+      DatabaseReference ssRef = FirebaseDatabase.instance
+          .ref("subjects-students/${data["insId"]}/${data["subId"]}/${FirebaseAuth.instance.currentUser!.uid}");
+      await ssRef.set({
+        "studentName": FirebaseAuth.instance.currentUser!.displayName,
+      });
 
-      // ref = FirebaseDatabase.instance
-      //     .ref("students/${FirebaseAuth.instance.currentUser!.uid}/subjects");
-      // await ref.update(jsonEncode( data["subId"]));
+      setState(() {
+        result = 'Added successfully';
+      });
     });
   }
 
@@ -63,29 +75,32 @@ class _QraViewsubjectState extends State<QraViewsubject> {
             Container(
               height: 400,
               width: 400,
-              child: QRView(
-                  key: _gLobalkey,
-                  onQRViewCreated: qr,
-                  overlay: QrScannerOverlayShape()),
+              child: QRView(key: _gLobalkey, onQRViewCreated: qr, overlay: QrScannerOverlayShape()),
             ),
             Center(
               child: (result != null)
                   ? Text(
-                      '${result!.code}',
-                      style: TextStyle(
-                          color: CustomColors.lightSecondaryColor,
-                          fontSize: 25),
+                      '${result}',
+                      style: TextStyle(color: CustomColors.lightSecondaryColor, fontSize: 25),
                     )
                   : Text(
                       'Scan a code',
-                      style: TextStyle(
-                          color: CustomColors.lightSecondaryColor,
-                          fontSize: 25),
+                      style: TextStyle(color: CustomColors.lightSecondaryColor, fontSize: 25),
                     ),
-            )
+            ),
           ],
         ),
       ),
+      floatingActionButton: result!=null? FloatingActionButton.extended(
+        onPressed: () {
+          controller!.resumeCamera();
+          setState(() {
+            result = null;
+          });
+        },
+        label: const Text('Scan again'),
+        icon: const Icon(Icons.qr_code_2),
+      ):null,
     );
   }
 }
