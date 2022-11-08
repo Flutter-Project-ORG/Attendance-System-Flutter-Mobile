@@ -38,7 +38,7 @@ class MyApp extends StatelessWidget {
           secondary: CustomColors.darkSecondaryColor,
         ),
       ),
-      home: const Log_in(),
+      home: const LogInView(),
     );
   }
 }

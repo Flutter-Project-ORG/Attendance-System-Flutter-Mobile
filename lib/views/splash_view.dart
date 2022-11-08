@@ -28,7 +28,7 @@ class _SplashViewState extends State<SplashView> {
         Duration(seconds: 5),
         () => Navigator.pushReplacement(context,
                 MaterialPageRoute(builder: (context) {
-              return Log_in();
+              return LogInView();
             })));
   }
 
