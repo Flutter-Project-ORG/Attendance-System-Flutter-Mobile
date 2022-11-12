@@ -1,6 +1,9 @@
+import 'package:attendance_system_flutter_mobile/trash/login_view.dart';
 import 'package:attendance_system_flutter_mobile/views/splash_view.dart';
 import 'package:flutter/material.dart';
 import 'package:introduction_screen/introduction_screen.dart';
+
+import '../view_model/on_boarding_view_model.dart';
 
 class OnBoardingView extends StatefulWidget {
   const OnBoardingView({Key? key}) : super(key: key);
@@ -10,6 +13,8 @@ class OnBoardingView extends StatefulWidget {
 }
 
 class _OnBoardingViewState extends State<OnBoardingView> {
+  final OnBoardingViewModel _viewModel = OnBoardingViewModel();
+
   @override
   Widget build(BuildContext context) {
     return SafeArea(
@@ -19,68 +24,63 @@ class _OnBoardingViewState extends State<OnBoardingView> {
           pages: [
             PageViewModel(
               decoration: PageDecoration(
-                  pageColor: Color.fromARGB(255, 56, 54, 54),
-                  titleTextStyle:
-                      TextStyle(color: Color.fromARGB(255, 223, 220, 220))),
-              title: "Scan QRA",
+                pageColor: Color.fromARGB(255, 56, 54, 54),
+                titleTextStyle: Theme.of(context).textTheme.bodyText1!,
+              ),
+              title: "Scan QR",
               bodyWidget: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 crossAxisAlignment: CrossAxisAlignment.center,
-                children: const [
+                children: [
                   Padding(
-                    padding: EdgeInsets.all(8.0),
+                    padding: const EdgeInsets.all(8.0),
                     child: Text(
-                      "Scan QRA to take attendance",
+                      "Scan QR to take attendance",
                       textAlign: TextAlign.center,
-                      style: TextStyle(
-                          fontSize: 18,
-                          color: Color.fromARGB(255, 223, 220, 220)),
+                      style: Theme.of(context).textTheme.bodyText2!,
                     ),
                   ),
                 ],
               ),
-              image: Center(child: Image.asset('assets/images/scan.jpg')),
+              image: Center(child: Image.asset('assets/images/qr_scan.gif')),
             ),
             PageViewModel(
               decoration: PageDecoration(
-                  pageColor: Color.fromARGB(255, 56, 54, 54),
-                  titleTextStyle:
-                      TextStyle(color: Color.fromARGB(255, 223, 220, 220))),
-              title: "Get Books  ",
+                pageColor: Color.fromARGB(255, 56, 54, 54),
+                titleTextStyle: Theme.of(context).textTheme.bodyText1!,
+              ),
+              title: "Latest News",
               bodyWidget: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
-                children: const [
+                children: [
                   Padding(
-                    padding: EdgeInsets.all(8.0),
+                    padding: const EdgeInsets.all(8.0),
                     child: Text(
-                      "Search for Any Book you want it  ",
+                      "Stay informed of the latest news",
                       textAlign: TextAlign.center,
-                      style: TextStyle(
-                          fontSize: 18,
-                          color: Color.fromARGB(255, 223, 220, 220)),
+                      style: Theme.of(context).textTheme.bodyText2!,
                     ),
                   ),
                 ],
               ),
-              image: Center(child: Image.asset('assets/images/book.jpg')),
+              image:
+                  Center(child: Image.asset('assets/images/latest_news.gif')),
             ),
             PageViewModel(
               decoration: PageDecoration(
-                  pageColor: Color.fromARGB(255, 56, 54, 54),
-                  titleTextStyle:
-                      TextStyle(color: Color.fromARGB(255, 223, 220, 220))),
+                pageColor: Color.fromARGB(255, 56, 54, 54),
+                titleTextStyle: Theme.of(context).textTheme.bodyText1!,
+              ),
               title: "View Profile",
               bodyWidget: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
-                children: const [
+                children: [
                   Padding(
-                    padding: EdgeInsets.all(8.0),
+                    padding: const EdgeInsets.all(8.0),
                     child: Text(
                       "View all Information About user profile  ",
                       textAlign: TextAlign.center,
-                      style: TextStyle(
-                          fontSize: 18,
-                          color: Color.fromARGB(255, 223, 220, 220)),
+                      style: Theme.of(context).textTheme.bodyText2!,
                     ),
                   ),
                 ],
@@ -88,28 +88,33 @@ class _OnBoardingViewState extends State<OnBoardingView> {
               image: Center(child: Image.asset('assets/images/info.jpg')),
             ),
           ],
-          onDone: () {
+          onDone: () async {
+            await _viewModel.onBoardingFinished();
             Navigator.pushReplacement(
-                context, MaterialPageRoute(builder: (context) => SplashView()));
+                context, MaterialPageRoute(builder: (context) => LogInView()));
           },
           showNextButton: true,
           next: const Icon(
             Icons.arrow_forward,
             color: Color.fromARGB(255, 56, 54, 54),
           ),
-          done: const Text("Done",
-              style: TextStyle(
-                  fontWeight: FontWeight.w600,
-                  color: Colors.orange,
-                  fontSize: 18)),
+          done: const Text(
+            "Done",
+            style: TextStyle(
+                fontWeight: FontWeight.w600,
+                color: Colors.orange,
+                fontSize: 18),
+          ),
           dotsDecorator: DotsDecorator(
-              size: const Size.square(10.0),
-              activeSize: const Size(20.0, 10.0),
-              activeColor: Colors.orange.shade800,
-              color: Color.fromARGB(255, 56, 54, 54),
-              spacing: const EdgeInsets.symmetric(horizontal: 3.0),
-              activeShape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(25.0))),
+            size: const Size.square(10.0),
+            activeSize: const Size(20.0, 10.0),
+            activeColor: Colors.orange.shade800,
+            color: Color.fromARGB(255, 56, 54, 54),
+            spacing: const EdgeInsets.symmetric(horizontal: 3.0),
+            activeShape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(25.0),
+            ),
+          ),
         ),
       ),
     );

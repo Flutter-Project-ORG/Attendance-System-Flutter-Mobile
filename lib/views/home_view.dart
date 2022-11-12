@@ -1,4 +1,4 @@
-import 'package:attendance_system_flutter_mobile/views/login_view.dart';
+import 'package:attendance_system_flutter_mobile/trash/login_view.dart';
 import 'package:flutter/material.dart';
 
 class home_page extends StatefulWidget {

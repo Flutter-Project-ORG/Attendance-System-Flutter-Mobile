@@ -5,15 +5,16 @@ import 'package:attendance_system_flutter_mobile/views/qr_home_select.dart';
 import 'package:attendance_system_flutter_mobile/views/qr_attendance_view.dart';
 import 'package:convex_bottom_bar/convex_bottom_bar.dart';
 import 'package:flutter/material.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 
-class nav extends StatefulWidget {
-  const nav({super.key});
+class NavView extends StatefulWidget {
+  const NavView({super.key});
 
   @override
-  State<nav> createState() => _navState();
+  State<NavView> createState() => _NavViewState();
 }
 
-class _navState extends State<nav> {
+class _NavViewState extends State<NavView> {
   int currentIndex = 0;
 
   final screens = [
@@ -27,6 +28,7 @@ class _navState extends State<nav> {
       child: ProfileScreen(),
     ),
   ];
+
   @override
   Widget build(BuildContext context) {
     return SafeArea(

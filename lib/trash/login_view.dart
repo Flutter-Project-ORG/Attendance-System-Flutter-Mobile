@@ -1,11 +1,9 @@
 import 'package:attendance_system_flutter_mobile/res/animation_enum.dart';
 import 'package:attendance_system_flutter_mobile/views/navigation_view.dart';
-import 'package:attendance_system_flutter_mobile/views/signup-view.dart';
+import 'package:attendance_system_flutter_mobile/trash/signup-view.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:flutter/src/widgets/container.dart';
-import 'package:flutter/src/widgets/framework.dart';
 import 'package:rive/rive.dart';
 
 class LogInView extends StatefulWidget {
@@ -235,7 +233,7 @@ class _LogInViewState extends State<LogInView> {
                                 Navigator.pushReplacement(context,
                                     MaterialPageRoute(
                                   builder: (context) {
-                                    return const nav();
+                                    return const NavView();
                                   },
                                 ));
                               } catch (e) {
