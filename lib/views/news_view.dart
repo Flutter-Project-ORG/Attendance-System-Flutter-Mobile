@@ -10,43 +10,44 @@ class NewsView extends StatefulWidget {
 }
 
 class _NewsViewState extends State<NewsView> {
-  Query dbRef = FirebaseDatabase.instance.ref().child('news');
-  DatabaseReference reference = FirebaseDatabase.instance.ref().child('news');
+  Query dbNewsRef = FirebaseDatabase.instance.ref('news');
 
   Widget listItem({required Map news}) {
-    return Container(
-      margin: const EdgeInsets.all(10),
-      padding: const EdgeInsets.all(10),
-      height: 110,
-      color: Colors.amberAccent,
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Text(
-            news['title'],
-            style: TextStyle(fontSize: 16, fontWeight: FontWeight.w400),
+    return Padding(
+      padding: const EdgeInsets.all(16.0),
+      child: SizedBox(
+        height: 220.0,
+        child: Container(
+          width: double.infinity,
+          decoration: BoxDecoration(
+            borderRadius: const BorderRadius.only(
+              topLeft: Radius.circular(32.0),
+              bottomRight: Radius.circular(32.0),
+            ),
+            image: DecorationImage(
+              opacity: 0.5,
+              fit: BoxFit.cover,
+              image: NetworkImage(news['imageLink']),
+            ),
           ),
-          const SizedBox(
-            height: 5,
-          ),
-          Text(
-            news['subtitle'],
-            style: TextStyle(fontSize: 16, fontWeight: FontWeight.w400),
-          ),
-          const SizedBox(
-            height: 5,
-          ),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.end,
-            crossAxisAlignment: CrossAxisAlignment.center,
+          alignment: Alignment.bottomCenter,
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
             children: [
+              Text(
+                news['title'],
+                style: Theme.of(context).textTheme.headline2,
+              ),
               const SizedBox(
-                width: 6,
+                height: 5,
+              ),
+              Text(
+                news['subtitle'],
+                style: Theme.of(context).textTheme.headline3,
               ),
             ],
-          )
-        ],
+          ),
+        ),
       ),
     );
   }
@@ -54,21 +55,18 @@ class _NewsViewState extends State<NewsView> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        appBar: AppBar(
-          title: const Text('News'),
-        ),
-        body: Container(
-          height: double.infinity,
-          child: FirebaseAnimatedList(
-            query: dbRef,
-            itemBuilder: (BuildContext context, DataSnapshot snapshot,
-                Animation<double> animation, int index) {
-              Map theNews = snapshot.value as Map;
-              theNews['key'] = snapshot.key;
-
-              return listItem(news: theNews);
-            },
-          ),
-        ));
+      appBar: AppBar(
+        title: const Text('Latest news'),
+      ),
+      body: FirebaseAnimatedList(
+        query: dbNewsRef,
+        itemBuilder: (BuildContext context, DataSnapshot snapshot,
+            Animation<double> animation, int index) {
+          Map theNews = snapshot.value as Map;
+          theNews['key'] = snapshot.key;
+          return listItem(news: theNews);
+        },
+      ),
+    );
   }
 }

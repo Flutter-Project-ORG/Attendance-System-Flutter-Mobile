@@ -1,50 +1,52 @@
 import 'package:attendance_system_flutter_mobile/res/colors.dart';
 import 'package:attendance_system_flutter_mobile/views/news_view.dart';
 import 'package:attendance_system_flutter_mobile/views/profile_view.dart';
-import 'package:attendance_system_flutter_mobile/views/qr_home_select.dart';
-import 'package:attendance_system_flutter_mobile/views/qr_attendance_view.dart';
+import 'package:attendance_system_flutter_mobile/views/qr_method_select_view.dart';
 import 'package:convex_bottom_bar/convex_bottom_bar.dart';
 import 'package:flutter/material.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 
-class nav extends StatefulWidget {
-  const nav({super.key});
+class NavView extends StatefulWidget {
+  const NavView({super.key});
 
   @override
-  State<nav> createState() => _navState();
+  State<NavView> createState() => _NavViewState();
 }
 
-class _navState extends State<nav> {
+class _NavViewState extends State<NavView> {
   int currentIndex = 0;
 
   final screens = [
-    Container(
-      child: NewsView(),
-    ),
-    Container(
-      child: qr_home(),
-    ),
-    Container(
-      child: ProfileScreen(),
-    ),
+    const NewsView(),
+    const QrMethodSelectView(),
+    ProfileView(),
   ];
+
   @override
   Widget build(BuildContext context) {
     return SafeArea(
       child: Scaffold(
         body: screens[currentIndex],
         bottomNavigationBar: ConvexAppBar(
-          items: [
+          elevation: 24.0,
+          items: const [
             TabItem(
               icon: Icon(Icons.home),
               title: 'Home',
             ),
-            TabItem(icon: Icon(Icons.qr_code), title: 'QR'),
-            TabItem(icon: Icon(Icons.person), title: 'Profile'),
+            TabItem(
+              icon: Icon(Icons.qr_code),
+              title: 'QR',
+            ),
+            TabItem(
+              icon: Icon(Icons.person),
+              title: 'Profile',
+            ),
           ],
-          initialActiveIndex: 0, //optional, default as 0
+          initialActiveIndex: 0,
           onTap: updateIndex,
-          backgroundColor: CustomColors.lightBgColor,
-          activeColor: CustomColors.darkPrimaryColor,
+          backgroundColor: Theme.of(context).canvasColor,
+          activeColor: Theme.of(context).colorScheme.secondary,
         ),
       ),
     );
