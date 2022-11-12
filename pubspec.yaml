@@ -34,6 +34,9 @@ dependencies:
   rive: ^0.9.1
   badges: ^2.0.3
   flutter_inset_box_shadow: ^1.0.8
+  date_picker_timeline: ^1.2.3
+  flutter_staggered_animations: ^1.1.1
+  flutter_svg: ^1.1.6
 
 dev_dependencies:
   flutter_test:

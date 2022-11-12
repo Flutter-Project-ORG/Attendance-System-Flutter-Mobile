@@ -136,7 +136,6 @@ class _AuthViewState extends State<AuthView> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      // backgroundColor: Colors.white,
       body: Padding(
         padding: EdgeInsets.symmetric(
             horizontal: MediaQuery.of(context).size.width / 20),
@@ -160,7 +159,7 @@ class _AuthViewState extends State<AuthView> {
                   children: [
                     if (!isLogin)
                       TextFormField(
-                        key: Key('user'),
+                        key: const Key('user'),
                         controller: usernameController,
                         style: Theme.of(context).textTheme.labelMedium,
                         decoration: InputDecoration(
@@ -195,7 +194,7 @@ class _AuthViewState extends State<AuthView> {
                         height: MediaQuery.of(context).size.height / 25,
                       ),
                     TextFormField(
-                      key: Key('email'),
+                      key: const Key('email'),
                       controller: emailController,
                       style: Theme.of(context).textTheme.labelMedium,
                       decoration: InputDecoration(
@@ -230,7 +229,7 @@ class _AuthViewState extends State<AuthView> {
                       height: MediaQuery.of(context).size.height / 25,
                     ),
                     TextFormField(
-                      key: Key('pass'),
+                      key: const Key('pass'),
                       controller: passwordController,
                       style: Theme.of(context).textTheme.labelMedium,
                       obscureText: true,
@@ -292,28 +291,31 @@ class _AuthViewState extends State<AuthView> {
                               navigator.pop();
                               navigator.pushReplacement(MaterialPageRoute(
                                   builder: (_) => const NavView()));
-                            }
-                            on FirebaseAuthException catch(e){
+                            } on FirebaseAuthException catch (e) {
                               navigator.pop();
                               String err = e.code.toLowerCase();
                               String message = '';
                               if (err == 'EMAIL_EXISTS') {
-                                message = 'The email address is already in use by another account.';
+                                message =
+                                    'The email address is already in use by another account.';
                               } else if (err == 'TOO_MANY_ATTEMPTS_TRY_LATER') {
-                                message = 'We have blocked all requests from this device due to unusual activity. Try again later.';
+                                message =
+                                    'We have blocked all requests from this device due to unusual activity. Try again later.';
                               } else if (err == 'EMAIL_NOT_FOUND') {
-                                message = 'There is no user record corresponding to this identifier. The user may have been deleted.';
+                                message =
+                                    'There is no user record corresponding to this identifier. The user may have been deleted.';
                               } else if (err == 'INVALID_PASSWORD') {
-                                message = 'The password is invalid or the user does not have a password.';
+                                message =
+                                    'The password is invalid or the user does not have a password.';
                               } else if (err == 'USER_DISABLED') {
-                                message = 'The user account has been disabled by an administrator.';
+                                message =
+                                    'The user account has been disabled by an administrator.';
                               } else {
                                 message = 'Something went wrong. Try again.';
                               }
                               Components.showErrorSnackBar(context,
                                   text: message);
-                            }
-                            catch (e) {
+                            } catch (e) {
                               navigator.pop();
                               Components.showErrorSnackBar(context,
                                   text: 'Try again.');
@@ -325,28 +327,31 @@ class _AuthViewState extends State<AuthView> {
                         },
                         child: Text(
                           isLogin ? 'Login' : 'Sign Up',
-                          style: TextStyle(fontSize: 20, color: Colors.white),
+                          style: const TextStyle(
+                              fontSize: 20, color: Colors.white),
                         ),
                       ),
                     ),
-                    Row(
-                      children: <Widget>[
-                        Text(isLogin
-                            ? "Doesn't have an account? "
-                            : "Already have an account? "),
-                        TextButton(
-                          child: Text(
-                            isLogin ? 'Sign UP' : 'Login',
-                            style: TextStyle(fontSize: 20),
-                          ),
-                          onPressed: () {
-                            setState(() {
-                              isLogin = !isLogin;
-                            });
-                          },
-                        )
-                      ],
-                      mainAxisAlignment: MainAxisAlignment.center,
+                    FittedBox(
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: <Widget>[
+                          Text(isLogin
+                              ? "Doesn't have an account? "
+                              : "Already have an account? "),
+                          TextButton(
+                            child: Text(
+                              isLogin ? 'Sign UP' : 'Login',
+                              style: const TextStyle(fontSize: 20),
+                            ),
+                            onPressed: () {
+                              setState(() {
+                                isLogin = !isLogin;
+                              });
+                            },
+                          )
+                        ],
+                      ),
                     ),
                   ],
                 ),

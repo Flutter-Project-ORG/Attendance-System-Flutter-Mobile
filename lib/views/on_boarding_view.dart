@@ -1,9 +1,8 @@
-import 'package:attendance_system_flutter_mobile/trash/login_view.dart';
-import 'package:attendance_system_flutter_mobile/views/splash_view.dart';
 import 'package:flutter/material.dart';
 import 'package:introduction_screen/introduction_screen.dart';
 
 import '../view_model/on_boarding_view_model.dart';
+import 'auth_view.dart';
 
 class OnBoardingView extends StatefulWidget {
   const OnBoardingView({Key? key}) : super(key: key);
@@ -91,7 +90,7 @@ class _OnBoardingViewState extends State<OnBoardingView> {
           onDone: () async {
             await _viewModel.onBoardingFinished();
             Navigator.pushReplacement(
-                context, MaterialPageRoute(builder: (context) => LogInView()));
+                context, MaterialPageRoute(builder: (context) => AuthView()));
           },
           showNextButton: true,
           next: const Icon(

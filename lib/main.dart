@@ -1,8 +1,8 @@
-import 'package:attendance_system_flutter_mobile/trash/login_view.dart';
 import 'package:attendance_system_flutter_mobile/views/on_boarding_view.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'firebase_options.dart';
 import 'res/colors.dart';
@@ -14,8 +14,8 @@ Future<void> main() async {
   await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
 
   final prefs = await SharedPreferences.getInstance();
-  bool isFirstTime = await prefs.getBool('isFirstTime') ?? true;
-
+  bool isFirstTime = prefs.getBool('isFirstTime') ?? true;
+  SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp]);
   runApp(MyApp(isFirstTime: isFirstTime));
 }
 
@@ -52,7 +52,7 @@ class MyApp extends StatelessWidget {
       darkTheme: ThemeData(
         fontFamily: 'JosefinSans',
         canvasColor: CustomColors.darkBgColor,
-        iconTheme:const IconThemeData(
+        iconTheme: const IconThemeData(
           color: CustomColors.darkPrimaryColor,
         ),
         colorScheme: ColorScheme.fromSwatch().copyWith(
@@ -71,10 +71,10 @@ class MyApp extends StatelessWidget {
             letterSpacing: 1.0,
           ),
           headline3: TextStyle(
-          color: CustomColors.darkTextColor,
-          fontSize: 24.0,
-          letterSpacing: 1.0,
-        ),
+            color: CustomColors.darkTextColor,
+            fontSize: 24.0,
+            letterSpacing: 1.0,
+          ),
           bodyText1: TextStyle(
             color: CustomColors.darkTextColor,
             fontSize: 24.0,
@@ -88,13 +88,12 @@ class MyApp extends StatelessWidget {
             fontSize: 18.0,
           ),
         ),
-
       ),
       home: isFirstTime
           ? const OnBoardingView()
           : user == null
-              ? AuthView()
-              : NavView(),
+              ? const AuthView()
+              : const NavView(),
     );
   }
 }

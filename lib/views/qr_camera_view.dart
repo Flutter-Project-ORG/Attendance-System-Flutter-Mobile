@@ -1,4 +1,3 @@
-import 'dart:convert';
 import 'package:attendance_system_flutter_mobile/view_model/qr_camera_view_model.dart';
 import 'package:flutter/material.dart';
 
