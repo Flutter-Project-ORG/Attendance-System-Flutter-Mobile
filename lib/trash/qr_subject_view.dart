@@ -36,6 +36,7 @@ class _QraViewsubjectState extends State<QraViewsubject> {
       final encrypter = encrypt.Encrypter(encrypt.AES(key));
       final decrypted = encrypter.decrypt(encrypt.Encrypted.fromBase64(event.code.toString()), iv: iv);
       Map<String, dynamic> data = jsonDecode(decrypted) as Map<String, dynamic>;
+
       DatabaseReference sRef =
           FirebaseDatabase.instance.ref("students/${FirebaseAuth.instance.currentUser!.uid}/subjects");
       final DataSnapshot test = await sRef.get();
@@ -46,7 +47,7 @@ class _QraViewsubjectState extends State<QraViewsubject> {
         });
         return;
       }
-      if (studentSubject == null) studentSubject = [];
+      studentSubject ??= [];
       studentSubject = studentSubject.toList();
       studentSubject.add(data["subId"]);
       await sRef.set(studentSubject);

@@ -3,7 +3,7 @@ import 'package:firebase_database/firebase_database.dart';
 
 class AuthViewModel {
   Future<void> login({required String email, required String password}) async {
-    UserCredential userCredential =
+
         await FirebaseAuth.instance.signInWithEmailAndPassword(
       email: email,
       password: password,

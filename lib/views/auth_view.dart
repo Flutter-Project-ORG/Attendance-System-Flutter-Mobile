@@ -1,12 +1,14 @@
-import 'package:attendance_system_flutter_mobile/res/animation_enum.dart';
-import 'package:attendance_system_flutter_mobile/views/navigation_view.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+
 import 'package:rive/rive.dart';
 
 import '../res/components.dart';
 import '../res/text_field_theme.dart';
 import '../view_model/auth_view_model.dart';
+import '../res/animation_enum.dart';
+import '../views/navigation_view.dart';
 
 class AuthView extends StatefulWidget {
   const AuthView({super.key});
@@ -264,25 +266,55 @@ class _AuthViewState extends State<AuthView> {
                         ),
                         onPressed: () async {
                           if (formKey.currentState!.validate()) {
+                            showDialog(
+                                context: context,
+                                builder: (context) {
+                                  return const Center(
+                                      child: CircularProgressIndicator());
+                                });
+                            final NavigatorState navigator =
+                                Navigator.of(context);
                             try {
                               if (isLogin) {
-                                _viewModel.login(
+                                await _viewModel.login(
                                     email: emailController.text.trim(),
                                     password: passwordController.text.trim());
                               } else {
-                                _viewModel.signUp(
+                                await _viewModel.signUp(
                                   email: emailController.text.trim(),
                                   password: passwordController.text.trim(),
                                   username: usernameController.text.trim(),
                                 );
                               }
                               addSuccessController();
-                              await Future.delayed(Duration(milliseconds: 500));
-                              Navigator.pushReplacement(
-                                  context,
-                                  MaterialPageRoute(
-                                      builder: (_) => const NavView()));
-                            } catch (e) {
+                              await Future.delayed(
+                                  const Duration(milliseconds: 500));
+                              navigator.pop();
+                              navigator.pushReplacement(MaterialPageRoute(
+                                  builder: (_) => const NavView()));
+                            }
+                            on FirebaseAuthException catch(e){
+                              navigator.pop();
+                              String err = e.code.toLowerCase();
+                              String message = '';
+                              if (err == 'EMAIL_EXISTS') {
+                                message = 'The email address is already in use by another account.';
+                              } else if (err == 'TOO_MANY_ATTEMPTS_TRY_LATER') {
+                                message = 'We have blocked all requests from this device due to unusual activity. Try again later.';
+                              } else if (err == 'EMAIL_NOT_FOUND') {
+                                message = 'There is no user record corresponding to this identifier. The user may have been deleted.';
+                              } else if (err == 'INVALID_PASSWORD') {
+                                message = 'The password is invalid or the user does not have a password.';
+                              } else if (err == 'USER_DISABLED') {
+                                message = 'The user account has been disabled by an administrator.';
+                              } else {
+                                message = 'Something went wrong. Try again.';
+                              }
+                              Components.showErrorSnackBar(context,
+                                  text: message);
+                            }
+                            catch (e) {
+                              navigator.pop();
                               Components.showErrorSnackBar(context,
                                   text: 'Try again.');
                               passwordFocusNode.unfocus();

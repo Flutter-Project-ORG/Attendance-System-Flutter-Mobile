@@ -52,11 +52,29 @@ class MyApp extends StatelessWidget {
       darkTheme: ThemeData(
         fontFamily: 'JosefinSans',
         canvasColor: CustomColors.darkBgColor,
+        iconTheme:const IconThemeData(
+          color: CustomColors.darkPrimaryColor,
+        ),
         colorScheme: ColorScheme.fromSwatch().copyWith(
           primary: CustomColors.darkPrimaryColor,
           secondary: CustomColors.darkSecondaryColor,
         ),
-        textTheme: TextTheme(
+        textTheme: const TextTheme(
+          headline1: TextStyle(
+            color: CustomColors.darkTextColor,
+            fontSize: 24.0,
+          ),
+          headline2: TextStyle(
+            color: CustomColors.darkTextColor,
+            fontSize: 28.0,
+            fontWeight: FontWeight.bold,
+            letterSpacing: 1.0,
+          ),
+          headline3: TextStyle(
+          color: CustomColors.darkTextColor,
+          fontSize: 24.0,
+          letterSpacing: 1.0,
+        ),
           bodyText1: TextStyle(
             color: CustomColors.darkTextColor,
             fontSize: 24.0,
