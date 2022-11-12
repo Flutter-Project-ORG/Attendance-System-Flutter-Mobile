@@ -13,7 +13,6 @@ Future<void> main() async {
     debugShowCheckedModeBanner: false,
     home: MyApp(),
   ));
-
 }
 
 class MyApp extends StatelessWidget {
@@ -39,7 +38,7 @@ class MyApp extends StatelessWidget {
           secondary: CustomColors.darkSecondaryColor,
         ),
       ),
-      home: const Log_in(),
+      home: const LogInView(),
     );
   }
 }
