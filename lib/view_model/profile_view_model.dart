@@ -7,27 +7,23 @@ import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:ndialog/ndialog.dart';
 
-class ProfileViewModel{
-
-  Future<void> logout()async{
+class ProfileViewModel {
+  Future<void> logout() async {
     await FirebaseAuth.instance.signOut();
   }
 
-
   Future<void> pickImageFromGallery(BuildContext context) async {
-    File? imageFile;
-    XFile? xFile = await ImagePicker().pickImage(source: ImageSource.gallery);
-
-    if (xFile == null) return;
-
-    final tempImage = File(xFile.path);
-
-    imageFile = tempImage;
     ProgressDialog progressDialog = ProgressDialog(
       context,
       title: const Text('Uploading !!!'),
       message: const Text('Please wait'),
     );
+    File? imageFile;
+    XFile? xFile = await ImagePicker().pickImage(source: ImageSource.gallery);
+    if (xFile == null) return;
+    final tempImage = File(xFile.path);
+    imageFile = tempImage;
+
     progressDialog.show();
     try {
       UploadTask uploadTask = FirebaseStorage.instance
@@ -48,6 +44,4 @@ class ProfileViewModel{
       progressDialog.dismiss();
     }
   }
-
-
 }
