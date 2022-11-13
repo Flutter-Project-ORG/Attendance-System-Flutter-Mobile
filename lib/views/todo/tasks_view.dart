@@ -2,9 +2,13 @@ import 'package:date_picker_timeline/date_picker_timeline.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_staggered_animations/flutter_staggered_animations.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+
 // import 'package:get/get.dart';
 // import 'package:google_fonts/google_fonts.dart';
 import 'package:intl/intl.dart';
+
+import 'add_task_view.dart';
+
 // import '../../controllers/task_controller.dart';
 // import '../../models/task.dart';
 // import '../../services/notification_services.dart';
@@ -16,14 +20,14 @@ import 'package:intl/intl.dart';
 // import '../widgets/task_tile.dart';
 // import 'add_task_page.dart';
 
-class TaskPage extends StatefulWidget {
-  const TaskPage({Key? key}) : super(key: key);
+class TasksView extends StatefulWidget {
+  const TasksView({Key? key}) : super(key: key);
 
   @override
-  State<TaskPage> createState() => _TaskPageState();
+  State<TasksView> createState() => _TasksViewState();
 }
 
-class _TaskPageState extends State<TaskPage> {
+class _TasksViewState extends State<TasksView> {
   // late NotifyHelper notifyHelper;
   @override
   void initState() {
@@ -35,15 +39,30 @@ class _TaskPageState extends State<TaskPage> {
   }
 
   DateTime _selectedDate = DateTime.now();
+
   // final TaskController _taskController = Get.put(TaskController());
   @override
   Widget build(BuildContext context) {
     // SizeConfig().init(context);
     return Scaffold(
-      appBar: _appBar(),
+      appBar: AppBar(
+        title: const Text('TO DO'),
+        actions: [
+          IconButton(
+            onPressed: () {
+              // notifyHelper.cancelAllNotification();
+              // _taskController.deleteAllTasks();
+            },
+            icon: const Icon(
+              Icons.cleaning_services_outlined,
+              size: 24,
+            ),
+          ),
+        ],
+      ),
       body: Column(
         children: [
-          // _addTaskBar(),
+          _addTaskBar(),
           _addDateBar(),
           const SizedBox(height: 6),
           // _showTasks(),
@@ -52,54 +71,29 @@ class _TaskPageState extends State<TaskPage> {
     );
   }
 
-  AppBar _appBar() {
-    return AppBar(
-      automaticallyImplyLeading: false,
-      elevation: 0,
-      actions: [
-        IconButton(
-          onPressed: () {
-            // notifyHelper.cancelAllNotification();
-            // _taskController.deleteAllTasks();
-          },
-          icon: const Icon(
-            Icons.cleaning_services_outlined,
-            size: 24,
+  _addTaskBar() {
+    return Container(
+      margin: const EdgeInsets.only(left: 20, right: 10, top: 10),
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        children: [
+          Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Text(DateFormat.yMMMMd().format(DateTime.now())),
+              const Text('Today')
+            ],
           ),
-        ),
-      ],
+          ElevatedButton(
+            onPressed: () {
+              Navigator.push(context, MaterialPageRoute(builder: (_) => const AddTaskView()));
+            },
+            child: const Text('+ Add Task'),
+          ),
+        ],
+      ),
     );
   }
-
-  // _addTaskBar() {
-  //   return Container(
-  //     margin: const EdgeInsets.only(left: 20, right: 10, top: 10),
-  //     child: Row(
-  //       mainAxisAlignment: MainAxisAlignment.spaceBetween,
-  //       children: [
-  //         Column(
-  //           crossAxisAlignment: CrossAxisAlignment.start,
-  //           children: [
-  //             Text(DateFormat.yMMMMd().format(DateTime.now()),
-  //                 style: subHeadingStyle),
-  //             Text(
-  //               'Today',
-  //               style: subHeadingStyle,
-  //             )
-  //           ],
-  //         ),
-  //         MyButton(
-  //           label: '+ Add Task',
-  //           onTap: () async {
-  //             Navigator.push(context, MaterialPageRoute(builder: ((context) {
-  //               return AddTaskPage();
-  //             })));
-  //           },
-  //         ),
-  //       ],
-  //     ),
-  //   );
-  // }
 
   _addDateBar() {
     return Container(
@@ -314,9 +308,9 @@ class _TaskPageState extends State<TaskPage> {
 
   _buildBottomSheet(
       {required String label,
-        required Function() onTap,
-        required Color clr,
-        bool isClose = false}) {
+      required Function() onTap,
+      required Color clr,
+      bool isClose = false}) {
     return GestureDetector(
       onTap: onTap,
       child: Container(
