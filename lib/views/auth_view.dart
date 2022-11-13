@@ -29,9 +29,9 @@ class _AuthViewState extends State<AuthView> {
 
   final GlobalKey<FormState> formKey = GlobalKey<FormState>();
 
-  TextEditingController usernameController = new TextEditingController();
-  TextEditingController emailController = new TextEditingController();
-  TextEditingController passwordController = new TextEditingController();
+  TextEditingController usernameController = TextEditingController();
+  TextEditingController emailController = TextEditingController();
+  TextEditingController passwordController = TextEditingController();
 
   final passwordFocusNode = FocusNode();
 
@@ -317,8 +317,11 @@ class _AuthViewState extends State<AuthView> {
                                   text: message);
                             } catch (e) {
                               navigator.pop();
-                              Components.showErrorSnackBar(context,
-                                  text: 'Try again.');
+                              String msg = 'Try again.';
+                              if (e.toString() == 'User not found.') {
+                                msg = e.toString();
+                              }
+                              Components.showErrorSnackBar(context, text: msg);
                               passwordFocusNode.unfocus();
                             }
                           } else {

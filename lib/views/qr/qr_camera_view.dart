@@ -28,6 +28,7 @@ class _QrCameraViewState extends State<QrCameraView> {
       if (event.code == null) return;
       controller.pauseCamera();
       try {
+        String id = FirebaseAuth.instance.currentUser!.uid;
         Map<String, dynamic> data =
             _viewModel.decryptDate(event.code.toString());
 
@@ -50,7 +51,7 @@ class _QrCameraViewState extends State<QrCameraView> {
             return;
           }
           DatabaseReference ref = FirebaseDatabase.instance.ref(
-              "attendance/${data['path']}/${FirebaseAuth.instance.currentUser!.uid}");
+              "attendance/${data['path']}/$id");
           ref.update({
             'isAttend': true,
           });
@@ -58,23 +59,30 @@ class _QrCameraViewState extends State<QrCameraView> {
             result = 'You are attend now!';
           });
         } else {
+          if (!data.containsKey('subId') ||
+              !data.containsKey('subName') ||
+              !data.containsKey('insId')) {
+            setState(() {
+              result = 'Try again';
+            });
+            return;
+          }
           DatabaseReference sRef = FirebaseDatabase.instance.ref(
-              "students/${FirebaseAuth.instance.currentUser!.uid}/subjects");
-          final DataSnapshot test = await sRef.get();
-          List? studentSubject = test.value as List?;
-          if (studentSubject != null &&
-              studentSubject.contains(data["subId"])) {
+              "students/$id/subjects/${data["subId"]}");
+          final DataSnapshot subForStudent = await sRef.get();
+          Map? studentSubject = subForStudent.value as Map?;
+          if (studentSubject != null) {
             setState(() {
               result = 'You already have this subject';
             });
             return;
           }
-          studentSubject ??= [];
-          studentSubject = studentSubject.toList();
-          studentSubject.add(data["subId"]);
-          await sRef.set(studentSubject);
+          await sRef.set({
+            'insId':data["insId"],
+            'subName':data["subName"],
+          });
           DatabaseReference ssRef = FirebaseDatabase.instance.ref(
-              "subjects-students/${data["insId"]}/${data["subId"]}/${FirebaseAuth.instance.currentUser!.uid}");
+              "subjects-students/${data["insId"]}/${data["subId"]}/$id");
           await ssRef.set({
             "studentName": FirebaseAuth.instance.currentUser!.displayName,
           });

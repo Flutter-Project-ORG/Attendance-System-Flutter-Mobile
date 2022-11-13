@@ -1,10 +1,11 @@
-import 'package:attendance_system_flutter_mobile/res/colors.dart';
-import 'package:attendance_system_flutter_mobile/views/news_view.dart';
-import 'package:attendance_system_flutter_mobile/views/profile_view.dart';
-import 'package:attendance_system_flutter_mobile/views/qr_method_select_view.dart';
-import 'package:convex_bottom_bar/convex_bottom_bar.dart';
 import 'package:flutter/material.dart';
-import 'package:firebase_auth/firebase_auth.dart';
+
+import 'package:convex_bottom_bar/convex_bottom_bar.dart';
+
+import 'news_view.dart';
+import 'profile_view.dart';
+import 'excuse_view.dart';
+import 'qr/qr_method_select_view.dart';
 
 class NavView extends StatefulWidget {
   const NavView({super.key});
