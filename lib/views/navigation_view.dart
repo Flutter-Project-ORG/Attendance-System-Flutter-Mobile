@@ -4,8 +4,8 @@ import 'package:convex_bottom_bar/convex_bottom_bar.dart';
 
 import 'news_view.dart';
 import 'profile_view.dart';
-import 'excuse_view.dart';
 import 'qr/qr_method_select_view.dart';
+import 'todo/tasks_view.dart';
 
 class NavView extends StatefulWidget {
   const NavView({super.key});
@@ -20,6 +20,7 @@ class _NavViewState extends State<NavView> {
   final screens = [
     const NewsView(),
     const QrMethodSelectView(),
+    const TasksView(),
     ProfileView(),
   ];
 
@@ -38,6 +39,10 @@ class _NavViewState extends State<NavView> {
             TabItem(
               icon: Icon(Icons.qr_code),
               title: 'QR',
+            ),
+            TabItem(
+              icon: Icon(Icons.notification_add),
+              title: 'TO DO',
             ),
             TabItem(
               icon: Icon(Icons.person),
