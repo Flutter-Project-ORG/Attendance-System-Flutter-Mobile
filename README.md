@@ -1,1 +1,1 @@
-# attendance_system_flutter_mobile
+# Student Attendance Mobile
