@@ -1,24 +1,13 @@
-import 'package:date_picker_timeline/date_picker_timeline.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_staggered_animations/flutter_staggered_animations.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
-// import 'package:get/get.dart';
-// import 'package:google_fonts/google_fonts.dart';
 import 'package:intl/intl.dart';
 
+import '../../view_model/todo/tasks_view_model.dart';
 import 'add_task_view.dart';
-
-// import '../../controllers/task_controller.dart';
-// import '../../models/task.dart';
-// import '../../services/notification_services.dart';
-// import '../../services/theme_services.dart';
-// import '../size_config.dart';
-// import '../theme.dart';
-// import '../widgets/button.dart';
-// import '../widgets/input_field.dart';
-// import '../widgets/task_tile.dart';
-// import 'add_task_page.dart';
 
 class TasksView extends StatefulWidget {
   const TasksView({Key? key}) : super(key: key);
@@ -28,46 +17,31 @@ class TasksView extends StatefulWidget {
 }
 
 class _TasksViewState extends State<TasksView> {
-  // late NotifyHelper notifyHelper;
-  @override
-  void initState() {
-    super.initState();
-    // notifyHelper = NotifyHelper();
-    // notifyHelper.requestIOSPermissions();
-    // notifyHelper.initializeNotification();
-    // _taskController.getTasks();
-  }
 
-  DateTime _selectedDate = DateTime.now();
+  final TasksViewModel _viewModel = TasksViewModel();
 
-  // final TaskController _taskController = Get.put(TaskController());
+  String studentId = FirebaseAuth.instance.currentUser!.uid;
+
   @override
   Widget build(BuildContext context) {
-    // SizeConfig().init(context);
     return Scaffold(
       appBar: AppBar(
         title: const Text('TO DO'),
-        actions: [
-          IconButton(
-            onPressed: () {
-              // notifyHelper.cancelAllNotification();
-              // _taskController.deleteAllTasks();
-            },
-            icon: const Icon(
-              Icons.cleaning_services_outlined,
-              size: 24,
-            ),
-          ),
-        ],
       ),
-      body: Column(
-        children: [
-          _addTaskBar(),
-          _addDateBar(),
-          const SizedBox(height: 6),
-          // _showTasks(),
-        ],
-      ),
+      body: StreamBuilder(
+          stream: FirebaseDatabase.instance.ref('notes/$studentId').onValue,
+          builder: (BuildContext context, AsyncSnapshot snapshot) {
+            if (snapshot.connectionState == ConnectionState.waiting) {
+              return const Center(child: CircularProgressIndicator());
+            }
+            return Column(
+              children: [
+                _addTaskBar(),
+                const SizedBox(height: 6),
+                _showTasks(snapshot),
+              ],
+            );
+          }),
     );
   }
 
@@ -86,7 +60,8 @@ class _TasksViewState extends State<TasksView> {
           ),
           ElevatedButton(
             onPressed: () {
-              Navigator.push(context, MaterialPageRoute(builder: (_) => const AddTaskView()));
+              Navigator.push(context,
+                  MaterialPageRoute(builder: (_) => const AddTaskView()));
             },
             child: const Text('+ Add Task'),
           ),
@@ -95,244 +70,140 @@ class _TasksViewState extends State<TasksView> {
     );
   }
 
-  _addDateBar() {
-    return Container(
-      margin: const EdgeInsets.only(top: 6, left: 20),
-      child: DatePicker(
-        DateTime.now(),
-        width: 60,
-        height: 100,
-        selectedTextColor: Colors.white,
-        initialSelectedDate: DateTime.now(),
-        // selectionColor: primaryClr,
-        dateTextStyle: const TextStyle(
-          fontSize: 20,
-          fontWeight: FontWeight.w600,
-          color: Colors.grey,
+  Widget _showTasks(AsyncSnapshot snapshot) {
+    if (snapshot.data != null &&
+        snapshot.hasData &&
+        snapshot.data!.snapshot.value != null) {
+      final Map<dynamic, dynamic> data =
+          snapshot.data!.snapshot.value as Map<dynamic, dynamic>;
+      List dataKeys = data.keys.toList();
+      return Expanded(
+        child: ListView.builder(
+          itemCount: data.length,
+          itemBuilder: (BuildContext context, int index) {
+            final singleData = data[dataKeys[index]];
+            return AnimationConfiguration.staggeredList(
+              position: index,
+              duration: const Duration(milliseconds: 500),
+              child: SlideAnimation(
+                horizontalOffset: 300,
+                child: FadeInAnimation(
+                  child: GestureDetector(
+                    onTap: () {
+                      showDialog(context: context, builder: (context){
+                        return AlertDialog(
+                          content: Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                            children: [
+                              OutlinedButton(
+                                onPressed: ()async {
+                                  await _viewModel.makeTaskCompleted(context,dataKeys[index]);
+                                },
+                                child: const Text('Complete'),
+                              ),
+                              OutlinedButton(
+                                onPressed: () async{
+                                  await _viewModel.deleteTask(context,dataKeys[index]);
+                                },
+                                child: const Text('Delete'),
+                              ),
+                            ],
+                          ),
+                        );
+                      });
+                    },
+                    child: Container(
+                      padding: const EdgeInsets.all(12),
+                      margin: const EdgeInsets.symmetric(
+                          horizontal: 12, vertical: 6),
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(16),
+                        color: Theme.of(context).colorScheme.primary,
+                      ),
+                      child: Row(
+                        children: [
+                          Expanded(
+                            child: SingleChildScrollView(
+                              child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  Text(
+                                    singleData['title'],
+                                  ),
+                                  const SizedBox(height: 12),
+                                  Text(
+                                    'Date: ${singleData['date']}',
+                                  ),
+                                  const SizedBox(height: 12),
+                                  Row(
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.center,
+                                    children: [
+                                      Icon(
+                                        Icons.access_time_rounded,
+                                        color: Colors.grey[200],
+                                        size: 18,
+                                      ),
+                                      const SizedBox(width: 12),
+                                      Text(
+                                        '${singleData['start']} - ${singleData['end']}',
+                                      )
+                                    ],
+                                  ),
+                                  const SizedBox(height: 12),
+                                  Text(
+                                    singleData['note'],
+                                  ),
+                                ],
+                              ),
+                            ),
+                          ),
+                          Container(
+                            margin: const EdgeInsets.symmetric(horizontal: 10),
+                            height: 60,
+                            width: 0.5,
+                            color: Colors.grey[200]!.withOpacity(0.7),
+                          ),
+                          RotatedBox(
+                            quarterTurns: 3,
+                            child: Text(
+                              !singleData['isFinished'] ? 'To Do' : 'Completed',
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                  ),
+                ),
+              ),
+            );
+          },
         ),
-        dayTextStyle: const TextStyle(
-          fontSize: 16,
-          fontWeight: FontWeight.w600,
-          color: Colors.grey,
-        ),
-        monthTextStyle: const TextStyle(
-          fontSize: 12,
-          fontWeight: FontWeight.w600,
-          color: Colors.grey,
-        ),
-        onDateChange: (newDate) {
-          setState(() {
-            _selectedDate = newDate;
-          });
-        },
-      ),
-    );
+      );
+    }
+    return Expanded(child: _noTaskMsg());
   }
 
-  Future<void> _onRefresh() async {
-    // _taskController.getTasks();
-  }
-
-  // _showTasks() {
-  //   return Expanded(
-  //     child: Obx(() {
-  //       if (_taskController.taskList.isEmpty) {
-  //         return _noTaskMsg();
-  //       } else {
-  //         return RefreshIndicator(
-  //           onRefresh: _onRefresh,
-  //           child: ListView.builder(
-  //             scrollDirection: SizeConfig.orientation == Orientation.landscape
-  //                 ? Axis.horizontal
-  //                 : Axis.vertical,
-  //             itemBuilder: (BuildContext context, int index) {
-  //               var task = _taskController.taskList[index];
-  //               if (task.repeat == 'Daily' ||
-  //                   task.date == DateFormat.yMd().format(_selectedDate) ||
-  //                   (task.repeat == 'Weekly' &&
-  //                       _selectedDate
-  //                           .difference(
-  //                           DateFormat.yMd().parse(task.date!))
-  //                           .inDays %
-  //                           7 ==
-  //                           0) ||
-  //                   (task.repeat == 'Monthly' &&
-  //                       DateFormat.yMd().parse(task.date!).day ==
-  //                           _selectedDate.day)) {
-  //                 var hour = task.startTime.toString().split(':')[0];
-  //                 var minutes = task.startTime.toString().split(':')[1];
-  //                 debugPrint('My time is' + hour);
-  //                 debugPrint('My minute is' + minutes);
-  //
-  //                 var date = DateFormat.jm().parse(task.startTime!);
-  //                 var myTime = DateFormat('HH:mm').format(date);
-  //
-  //                 notifyHelper.scheduledNotification(
-  //                   int.parse(myTime.toString().split(':')[0]),
-  //                   int.parse(myTime.toString().split(':')[1]),
-  //                   task,
-  //                 );
-  //
-  //                 return AnimationConfiguration.staggeredList(
-  //                   position: index,
-  //                   duration: const Duration(milliseconds: 500),
-  //                   child: SlideAnimation(
-  //                     horizontalOffset: 300,
-  //                     child: FadeInAnimation(
-  //                       child: GestureDetector(
-  //                           onTap: () => showBottomSheet(context, task),
-  //                           child: TaskTile(task)),
-  //                     ),
-  //                   ),
-  //                 );
-  //               } else
-  //                 return Container();
-  //             },
-  //             itemCount: _taskController.taskList.length,
-  //           ),
-  //         );
-  //       }
-  //     }),
-  //   );
-  // }
-  //
-  // _noTaskMsg() {
-  //   return Stack(
-  //     children: [
-  //       AnimatedPositioned(
-  //         duration: const Duration(milliseconds: 2000),
-  //         child: RefreshIndicator(
-  //           onRefresh: _onRefresh,
-  //           child: SingleChildScrollView(
-  //             child: Wrap(
-  //               alignment: WrapAlignment.center,
-  //               crossAxisAlignment: WrapCrossAlignment.center,
-  //               direction: SizeConfig.orientation == Orientation.landscape
-  //                   ? Axis.horizontal
-  //                   : Axis.vertical,
-  //               children: [
-  //                 SizeConfig.orientation == Orientation.landscape
-  //                     ? const SizedBox(height: 6)
-  //                     : const SizedBox(height: 220),
-  //                 SvgPicture.asset(
-  //                   'assets/images/task.svg',
-  //                   color: primaryClr.withOpacity(0.5),
-  //                   height: 90,
-  //                   semanticsLabel: 'Task',
-  //                 ),
-  //                 Padding(
-  //                   padding: const EdgeInsets.symmetric(
-  //                       horizontal: 30, vertical: 10),
-  //                   child: Text(
-  //                     'You don\'t have any tasks yet!\n Add new tasks to make your days productive.',
-  //                     style: subTitleStyle,
-  //                     textAlign: TextAlign.center,
-  //                   ),
-  //                 ),
-  //                 SizeConfig.orientation == Orientation.landscape
-  //                     ? const SizedBox(height: 120)
-  //                     : const SizedBox(height: 180),
-  //               ],
-  //             ),
-  //           ),
-  //         ),
-  //       ),
-  //     ],
-  //   );
-  // }
-  //
-  // showBottomSheet(BuildContext context, Task task) {
-  //   Get.bottomSheet(
-  //     SingleChildScrollView(
-  //       child: Container(
-  //         padding: const EdgeInsets.only(top: 4),
-  //         width: SizeConfig.screenWidth,
-  //         height: (SizeConfig.orientation == Orientation.landscape)
-  //             ? (task.isCompleted == 1
-  //             ? SizeConfig.screenHeight * 0.6
-  //             : SizeConfig.screenHeight * 0.8)
-  //             : (task.isCompleted == 1
-  //             ? SizeConfig.screenHeight * 0.30
-  //             : SizeConfig.screenHeight * 0.39),
-  //         color: Get.isDarkMode ? Colors.black : Colors.white, //here
-  //         child: Column(
-  //           children: [
-  //             Flexible(
-  //               child: Container(
-  //                 height: 6,
-  //                 width: 120,
-  //                 decoration: BoxDecoration(
-  //                   borderRadius: BorderRadius.circular(10),
-  //                   color: Get.isDarkMode ? Colors.grey[600] : Colors.grey[300],
-  //                 ),
-  //               ),
-  //             ),
-  //             const SizedBox(height: 20),
-  //             task.isCompleted == 1
-  //                 ? Container()
-  //                 : _buildBottomSheet(
-  //               label: 'Task Completed',
-  //               onTap: () {
-  //                 notifyHelper.cancelNotification(task);
-  //                 _taskController.markTaskCompleted(task.id!);
-  //                 Get.back();
-  //               },
-  //               clr: primaryClr,
-  //             ),
-  //             _buildBottomSheet(
-  //               label: 'Delete Task',
-  //               onTap: () {
-  //                 notifyHelper.cancelNotification(task);
-  //                 _taskController.deleteTasks(task);
-  //                 Get.back();
-  //               },
-  //               clr: Colors.red[300]!,
-  //             ),
-  //             Divider(
-  //               color: Get.isDarkMode ? Colors.grey : darkGreyClr,
-  //             ),
-  //             _buildBottomSheet(
-  //               label: 'Cancel',
-  //               onTap: () {
-  //                 Get.back();
-  //               },
-  //               clr: Colors.grey,
-  //             ),
-  //             const SizedBox(height: 20),
-  //           ],
-  //         ),
-  //       ),
-  //     ),
-  //   );
-  // }
-
-  _buildBottomSheet(
-      {required String label,
-      required Function() onTap,
-      required Color clr,
-      bool isClose = false}) {
-    return GestureDetector(
-      onTap: onTap,
-      child: Container(
-        margin: const EdgeInsets.symmetric(vertical: 4),
-        height: 65,
-        // width: SizeConfig.screenWidth * 0.9,
-        decoration: BoxDecoration(
-          border: Border.all(
-            width: 2,
-            // color: isClose
-            //     ? Get.isDarkMode
-            //     ? Colors.grey[600]!
-            //     : Colors.grey[300]!
-            //     : clr,
-          ),
-        ),
-        child: Center(
-          child: Text(
-            label,
-            // style:
-            // isClose ? titleStyle : titleStyle.copyWith(color: primaryClr),
-          ),
+  Center _noTaskMsg() {
+    return Center(
+      child: SingleChildScrollView(
+        child: Wrap(
+          alignment: WrapAlignment.center,
+          crossAxisAlignment: WrapCrossAlignment.center,
+          children: [
+            SvgPicture.asset(
+              'assets/images/no_tasks.svg',
+              height: 90,
+              semanticsLabel: 'Task',
+            ),
+            const Padding(
+              padding: EdgeInsets.symmetric(horizontal: 30, vertical: 10),
+              child: Text(
+                'You don\'t have any tasks yet!\n Add new tasks to make your days productive.',
+                textAlign: TextAlign.center,
+              ),
+            ),
+          ],
         ),
       ),
     );

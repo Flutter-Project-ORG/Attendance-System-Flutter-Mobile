@@ -1,14 +1,18 @@
 import 'package:flutter/material.dart';
 
 import 'package:convex_bottom_bar/convex_bottom_bar.dart';
+import 'package:provider/provider.dart';
 
+import '../view_model/todo/tasks_view_model.dart';
 import 'news_view.dart';
 import 'profile_view.dart';
 import 'qr/qr_method_select_view.dart';
 import 'todo/tasks_view.dart';
 
 class NavView extends StatefulWidget {
-  const NavView({super.key});
+  const NavView({super.key,this.isNotifiy});
+
+  final bool? isNotifiy;
 
   @override
   State<NavView> createState() => _NavViewState();
@@ -26,6 +30,9 @@ class _NavViewState extends State<NavView> {
 
   @override
   Widget build(BuildContext context) {
+    if(widget.isNotifiy == true){
+      currentIndex = 2;
+    }
     return SafeArea(
       child: Scaffold(
         body: screens[currentIndex],

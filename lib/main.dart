@@ -1,15 +1,16 @@
-import 'package:attendance_system_flutter_mobile/views/on_boarding_view.dart';
+import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
+
 import 'package:awesome_notifications/awesome_notifications.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
-import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+
 import 'firebase_options.dart';
+import 'views/on_boarding_view.dart';
 import 'res/colors.dart';
 import 'views/navigation_view.dart';
 import 'views/auth_view.dart';
-import 'views/todo/notification_view.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -26,18 +27,14 @@ Future<void> main() async {
           ledColor: Colors.white,
         ),
       ],
-      // Channel groups are only visual and are not required
       channelGroups: [
         NotificationChannelGroup(
-            channelGroupKey: 'basic_channel_group',
+            channelGroupkey: 'basic_channel_group',
             channelGroupName: 'Basic group')
       ],
       debug: true);
   AwesomeNotifications().isNotificationAllowed().then((isAllowed) {
     if (!isAllowed) {
-      // This is just a basic example. For real apps, you must show some
-      // friendly dialog box before call the request method.
-      // This is very important to not harm the user experience
       AwesomeNotifications().requestPermissionToSendNotifications();
     }
   });
@@ -58,17 +55,7 @@ class MyApp extends StatefulWidget {
 }
 
 class _MyAppState extends State<MyApp> {
-  @override
-  void initState() {
-    AwesomeNotifications().setListeners(
-        onActionReceivedMethod: (ReceivedAction receivedAction) async {
-          Navigator.push(context,MaterialPageRoute(builder: (_) =>  NotificationView(
-            title: receivedAction.title!, note: receivedAction.body!,
-            time: receivedAction.actionDate!.toIso8601String().split('T')[0],
-          )));
-    });
-    super.initState();
-  }
+
 
   @override
   Widget build(BuildContext context) {

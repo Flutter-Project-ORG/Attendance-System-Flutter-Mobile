@@ -154,6 +154,7 @@ class _AddTaskViewState extends State<AddTaskView> {
               ),
               const SizedBox(height: 16.0),
               DropdownButtonFormField<int>(
+                value: _selectedRemind,
                 items: remindList.map((e) {
                   return DropdownMenuItem(
                     value: e,
@@ -168,7 +169,6 @@ class _AddTaskViewState extends State<AddTaskView> {
                   labelStyle: Theme.of(context).textTheme.headline5,
                   hintStyle: Theme.of(context).textTheme.headline5,
                   labelText: 'Remind',
-                  hintText: 'Enter title here',
                   border: TextFieldTheme.border1,
                   enabledBorder: TextFieldTheme.border2,
                 ),
@@ -177,10 +177,12 @@ class _AddTaskViewState extends State<AddTaskView> {
               ElevatedButton(
                 onPressed: () {
                   _viewModel.addTask(
+                    context,
                     title: _titleController.text.trim(),
                     note: _noteController.text.trim(),
                     date: _selectedDate,
                     start: _startTime,
+                    end: _endTime,
                     remind: _selectedRemind,
                   );
                 },
