@@ -9,6 +9,7 @@ Student attendance system helps instructors to mark online attendance of student
 Now we will talk about the mobile application, first of all we have 4 home screens: News, QR ,To Do and profile. 
 
 
+>![logot](https://user-images.githubusercontent.com/93406200/202755328-8eb917cb-f475-4e18-bff2-aaf37ef1e6b6.png)
 
 >![news](https://user-images.githubusercontent.com/93406200/202599809-52274bac-75f9-4ae2-b275-315d5e8a213e.jpeg)
 
