@@ -1,7 +1,7 @@
 # Student Attendance Mobile
 
 ## INTRODUCTION
-Student attendance system helps teachers to mark online attendance of students during class & reduce manual work. QR code It is used to track student's attendance, absentee record, attendance reports .
+Student attendance system helps instructors to mark online attendance of students during class & reduce manual work. QR code It is used to track student's attendance, absentee record, attendance reports .
 
 
 
