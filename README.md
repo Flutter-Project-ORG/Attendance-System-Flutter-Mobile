@@ -1,28 +1,22 @@
 # Student Attendance Mobile
 
 ## INTRODUCTION
-dasdsdfsdfgfdgh
+Student attendance system helps teachers to mark online attendance of students during class & reduce manual work. QR code It is used to track student's attendance, absentee record, attendance reports .
 
 
-## TEST
-dasdsdfsdfgfdgh
 
-```bash
-flutter doctor
-```
+## RESULTS
+
+>![news](https://user-images.githubusercontent.com/93406200/202599809-52274bac-75f9-4ae2-b275-315d5e8a213e.jpeg)
 
 
-```dart
-void main(){
-print('Hello, World!');
-}
-```
+>![qr](https://user-images.githubusercontent.com/93406200/202599831-14f42c33-97a2-4152-a13a-60a3abeeb810.jpeg)
 
->![login_image](https://user-images.githubusercontent.com/96818454/201980961-bafa84e9-f6fb-476b-9df4-0db5f683cdac.png)
 
->![profile](https://user-images.githubusercontent.com/96818454/201980972-fb2de212-6b37-4af9-9365-c3a9992f51f8.png)
+>![to do](https://user-images.githubusercontent.com/93406200/202599896-064de2bb-9068-47e5-9f66-ca73c309c857.jpeg)
 
->![qr_code](https://user-images.githubusercontent.com/96818454/201980973-ef29a7de-3cd5-4b58-85fa-f185b59dff86.gif)
+>![profile](https://user-images.githubusercontent.com/93406200/202599916-f9d327ff-e88b-4df9-af1c-a7c2e62de778.jpeg)
+
 
 
 
