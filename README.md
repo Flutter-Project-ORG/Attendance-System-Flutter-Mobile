@@ -41,26 +41,39 @@ Students can see all information about them like their own picture ,username and
 Also they can see all subjects they have  added and if press in any subject you can send Text and image if you have absent with excuse. Through it, the instructor can approve or reject this excuse.
 
 
->![excuse](https://user-images.githubusercontent.com/93406200/202607246-c6ddfc5e-b53e-4653-bc55-e2ee8954f454.jpeg)
+>![excuse](https://user-images.githubusercontent.com/93406200/202771886-fc1e3dde-3f84-46f9-a82a-fd6989d3725d.png)
 
 
->![add task](https://user-images.githubusercontent.com/93406200/202607184-5cac7f62-68e9-4b43-a761-7d0e717c370a.jpeg)
+
+>![add task](https://user-images.githubusercontent.com/93406200/202771982-d9b40263-6a77-4cf3-bbcc-237fe77ed798.png)
 
 
->![logot](https://user-images.githubusercontent.com/93406200/202755328-8eb917cb-f475-4e18-bff2-aaf37ef1e6b6.png)
+
+>![login](https://user-images.githubusercontent.com/93406200/202772144-c8dc068f-3aa1-40ab-8336-8c8f6be7c346.png)
 
 
->![sign up](https://user-images.githubusercontent.com/93406200/202607126-8c2061c4-e489-4bed-932d-81284c0d359e.png)
+
+>![sign up](https://user-images.githubusercontent.com/93406200/202772200-7e105d97-b721-4963-b7d4-de6fedb1a50b.png)
 
 
->![on news](https://user-images.githubusercontent.com/93406200/202607364-56b6da99-258e-4329-9253-f0daf70edca6.png)
+
+>![on news](https://user-images.githubusercontent.com/93406200/202772240-9e5d3f79-bbe0-4e4a-bdb9-8510c4ce9cca.png)
 
 
->![on qr](https://user-images.githubusercontent.com/93406200/202607382-f24b9693-aff5-44f4-9e53-f11e88e9a89b.png)
+
+>![on scan](https://user-images.githubusercontent.com/93406200/202772268-48ae4e55-5c22-4b68-9015-cdf222b8d8a5.png)
 
 
->![on to do](https://user-images.githubusercontent.com/93406200/202607421-7a889ec1-87c2-429a-ac46-4784d017a401.png)
+
+>![on to do](https://user-images.githubusercontent.com/93406200/202772290-53343776-d8b0-4822-9105-0e4bdc42203a.png)
 
 
->![on profile](https://user-images.githubusercontent.com/93406200/202607452-1783771c-7a72-41af-9d2b-5bb4604337b4.png)
+
+>![on profile](https://user-images.githubusercontent.com/93406200/202772311-c970946d-9770-4ed3-ac80-9517a9ee09ae.png)
+
+
+>![scan add sub](https://user-images.githubusercontent.com/93406200/202772343-a77220e3-a4d0-41ff-b43a-165b50434fa3.png)
+
+>![scan to attend](https://user-images.githubusercontent.com/93406200/202772383-f91a8f40-2d78-41b3-9dc9-384ec9b25633.png)
+
 
