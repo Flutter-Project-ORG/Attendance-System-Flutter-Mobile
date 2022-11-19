@@ -143,6 +143,10 @@ class _AuthViewState extends State<AuthView> {
           child: Column(
             children: [
               SizedBox(
+                height: 100,
+              ),
+              Text("Students Attendance"),
+              SizedBox(
                 height: MediaQuery.of(context).size.height / 3,
                 child: riveArtBoard == null
                     ? const SizedBox.shrink()
