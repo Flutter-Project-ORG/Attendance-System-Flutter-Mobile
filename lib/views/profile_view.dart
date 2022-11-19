@@ -121,12 +121,12 @@ class ProfileView extends StatelessWidget {
                             children: [
                               Text(
                                 'Username: ${data['username']}',
-                                style: Theme.of(context).textTheme.headline3,
+                                style: Theme.of(context).textTheme.headline4,
                               ),
                               const SizedBox(height: 8.0),
                               Text(
                                 'Email: ${data['email']}',
-                                style: Theme.of(context).textTheme.headline3,
+                                style: Theme.of(context).textTheme.headline4,
                               ),
                             ],
                           ),
