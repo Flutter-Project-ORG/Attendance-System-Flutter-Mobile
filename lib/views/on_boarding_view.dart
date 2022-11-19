@@ -26,6 +26,28 @@ class _OnBoardingViewState extends State<OnBoardingView> {
                 pageColor: Color.fromARGB(255, 56, 54, 54),
                 titleTextStyle: Theme.of(context).textTheme.bodyText1!,
               ),
+              title: "Latest News",
+              bodyWidget: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: [
+                  Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: Text(
+                      "Stay informed of the latest news",
+                      textAlign: TextAlign.center,
+                      style: Theme.of(context).textTheme.bodyText2!,
+                    ),
+                  ),
+                ],
+              ),
+              image: Center(child: Image.asset('assets/images/news.png')),
+            ),
+            PageViewModel(
+              decoration: PageDecoration(
+                pageColor: Color.fromARGB(255, 56, 54, 54),
+                titleTextStyle: Theme.of(context).textTheme.bodyText1!,
+              ),
               title: "Scan QR",
               bodyWidget: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
@@ -48,22 +70,21 @@ class _OnBoardingViewState extends State<OnBoardingView> {
                 pageColor: Color.fromARGB(255, 56, 54, 54),
                 titleTextStyle: Theme.of(context).textTheme.bodyText1!,
               ),
-              title: "Latest News",
+              title: "To Do Reminder",
               bodyWidget: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   Padding(
                     padding: const EdgeInsets.all(8.0),
                     child: Text(
-                      "Stay informed of the latest news",
+                      "Reminders are useful because they keep us organized and on task in our daily lives and offer valuable support to students.",
                       textAlign: TextAlign.center,
                       style: Theme.of(context).textTheme.bodyText2!,
                     ),
                   ),
                 ],
               ),
-              image:
-                  Center(child: Image.asset('assets/images/latest_news.gif')),
+              image: Center(child: Image.asset('assets/images/todo.png')),
             ),
             PageViewModel(
               decoration: PageDecoration(
@@ -84,7 +105,8 @@ class _OnBoardingViewState extends State<OnBoardingView> {
                   ),
                 ],
               ),
-              image: Center(child: Image.asset('assets/images/info.jpg')),
+              image:
+                  Center(child: Image.asset('assets/images/infoprofile.png')),
             ),
           ],
           onDone: () async {
