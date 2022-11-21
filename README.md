@@ -3,6 +3,12 @@
 ## INTRODUCTION
 Student attendance system helps instructors to mark online attendance of students during class & reduce manual work. QR code It is used to track student's attendance, absentee record, attendance reports .
 
+## Color Palettes:
+
+- Color darkBgColor = Color(0xFF1B2430);
+- Color darkPrimaryColor = Color(0xFFC84B31);
+- Color darkSecondaryColor = Color(0xFF2D4263);
+- Color darkTextColor = Color(0xFFECDBBA);
 
 
 ## RESULTS
