@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
 class CustomColors {
-  static const Color darkBgColor = Color(0xFF202020);
+  static const Color darkBgColor = Color(0xFF1B2430);
   static const Color darkPrimaryColor = Color(0xFFC84B31);
   static const Color darkSecondaryColor = Color(0xFF2D4263);
   static const Color darkTextColor = Color(0xFFECDBBA);
