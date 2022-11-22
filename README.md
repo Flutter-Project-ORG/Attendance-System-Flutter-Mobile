@@ -5,11 +5,12 @@ Student attendance system helps instructors to mark online attendance of student
 
 ## Color Palettes:
 
-- Color darkBgColor = Color(0xFF1B2430);
-- Color darkPrimaryColor = Color(0xFFC84B31);
-- Color darkSecondaryColor = Color(0xFF2D4263);
-- Color darkTextColor = Color(0xFFECDBBA);
-
+| Color        | Hex           |
+| ------------- |:-------------:|
+| Background      | #1B2430 |
+| Primary      | #C84B31 |
+| Secondary      | #2D4263 |
+| Text      | #ECDBBA |
 
 ## RESULTS
 Now we will talk about the mobile application, first of all we have 4 home screens: News, QR ,To Do and profile. 
