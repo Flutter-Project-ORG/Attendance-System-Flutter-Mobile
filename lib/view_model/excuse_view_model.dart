@@ -66,6 +66,16 @@ class ExcuseViewModel with ChangeNotifier {
       String studentId = FirebaseAuth.instance.currentUser!.uid;
       final DatabaseReference dbRef =
           FirebaseDatabase.instance.ref('excuses/$insId/$subId/$studentId');
+      /// To get student image
+      final DatabaseReference imageRef =
+      FirebaseDatabase.instance.ref('students/${FirebaseAuth.instance.currentUser!.uid}');
+      final imageRes = await imageRef.get();
+      if(!imageRes.exists) return;
+      Map studentData = imageRes.value as Map;
+      await dbRef.update({
+        'image':studentData['imageUrl'],
+        'studentName':FirebaseAuth.instance.currentUser!.displayName,
+      });
       await dbRef.push().set({
         'excuseText':excuseText,
         'imageUrl':imageUrl,
