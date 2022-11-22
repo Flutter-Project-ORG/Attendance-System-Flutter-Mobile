@@ -80,8 +80,8 @@ class ProfileView extends StatelessWidget {
                                 CircleAvatar(
                               backgroundImage: imageProvider,
                             ),
-                            imageUrl:
-                                data['imageUrl'] ?? 'assets/images/profile.png',
+                            imageUrl: data['imageUrl'] ??
+                                'https://www.pngitem.com/pimgs/m/391-3918613_personal-service-platform-person-icon-circle-png-transparent.png',
                             placeholder: (context, _) =>
                                 Image.memory(kTransparentImage),
                           ),
